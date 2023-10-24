@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+enum MemberRole {
+  CUSTOMER
+  DELIVERY_PERSONNEL
+  VENDOR
+}
+
+// Enum to represent order statuses
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  DELIVERED
+  CANCELED
+}
+
+model User {
+  id       String     @id @default(cuid())
+  name     String
+  email    String     @unique
+  phone    String     @unique
+  password String
+  address  String
+  photo    String     @default("uploads/images/users/no-avatar.png")
+  role     MemberRole @default(CUSTOMER)
+
+  otps   OTP[]
+  orders Order[]
+
+  validated Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Vendor model to represent restaurants and food vendors
+model Vendor {
+  id        Int       @id @default(autoincrement())
+  name      String
+  address   String
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+// Product model to represent food items offered by vendors
+model Product {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  vendor      Vendor   @relation(fields: [vendorId], references: [id])
+  vendorId    Int
+  order       Order[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Order model to represent customer orders
+model Order {
+  id         Int         @id @default(autoincrement())
+  user       User        @relation(fields: [userId], references: [id])
+  userId     String
+  products   Product[]
+  status     OrderStatus
+  totalPrice Float
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+}
+
+model OTP {
+  id      Int      @id @default(autoincrement())
+  code    String
+  expires DateTime
+  user    User     @relation(fields: [userId], references: [id])
+  userId  String
+  // Add other necessary fields
+}

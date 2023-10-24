@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+.navbar{
+    height: 7rem;
+    max-width: 100%;
+    border-bottom: 3px solid rgb(182, 36, 239);
+}
+.menu ul li{
+    padding: 0 3em;
+    border-left: 3px solid rgb(182, 36, 239);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   font-weight: bold;
+   color: black;
+   font-size: 1.1em;
+   transition: .5s ease-in-out;
+}
+.menu ul li:hover{
+    background: rgb(232, 51, 232);
+    color: white;
+    transition: .5s ease-in-out;
+}
+.reg{
+    position: relative;
+    transition: .5s ease-in-out;
+}
+.reg:hover .regMenu{
+   display: block;
+}
+.regMenu{
+  display: none;
+  background: rgb(243, 31, 221);
+  position: absolute;
+  z-index: 60;
+  transition: .5s  ease-in-out;
+  margin: .2em 0 0 2em;
+}
+.regMenu ul li{
+    padding: 1em 2em;
+    transition: .5s ease-in-out;
+}
+.menu ul li Link{
+    text-align: center;
+}
+
+
+@media screen and (max-width: 600px){
+    .toggleIc{
+        position: relative;
+        }
+    .menu{
+        position: absolute;
+        z-index: 100;
+    }
+    .toggleIc:hover .menu{
+        display: block;
+    }
+    
+}
+
+
+.heroSec{
+    background: url("/pexels-amar-preciado-17593640.jpg") no-repeat fixed center;
+    height: 90vh;
+    max-width: 100%;
+}
+.heroSec  h1 {
+
+      font-size: 2.9rem;
+      font-family:Verdana, Geneva, Tahoma, sans-serif;
+      color: white;
+      font-weight: bold;
+      padding-top: 2.5em;
+      padding-left: 1.5em;
+}
+.heroSec p{
+  color: whitesmoke;
+  padding-left: 2.5em;
+}
